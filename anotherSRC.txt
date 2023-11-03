@@ -1,0 +1,397 @@
+Linked List    
+addFirst
+  public void addFirst(Car x) {
+        Node p = new Node(x);               
+        if(isEmpty()) {head = tail = p;}    
+        else {p.next = head; head = p;}     
+    }                                       
+                                                                              
+addLast
+    //Inserting a new node at the end of a list
+    public void addLast(int x) {
+        Node p = new Node(x);
+        if(isEmpty()) {head = tail = p;}
+        else {tail.next = p; tail = p;}
+    }
+deleFirst
+    
+    //Deleting a node from the beginning of a list
+    public void deleFirst() {
+        Node p=head;
+        if(p==null) return;
+        //if head in not null and next of head is null, delete the head
+        if(p.next == null) {
+            p = null;
+        } else {
+            head=p.next;
+        }
+    }
+deleLast
+    //Deleting element from the end of a list
+    public void deleLast() {
+        Node p=head;
+        if(p==null) return;
+        //if head in not null and next of head is null, delete the head
+        if(p.next == null) {
+            p = null;
+        } else { //else, traverse to the second last element of the list
+            Node temp = new Node();
+            temp = p;
+            while(temp.next.next != null)
+                temp = temp.next; // temp is the second last node 
+            //change the next of temp to null and delete the last node
+            Node lastNode = temp.next;
+            temp.next = null; 
+            lastNode = null;
+        }
+    }
+traversal
+    //Display the nodes in singly linked list 
+    public void traversal() {
+        Node p = head;
+        while(p != null) {
+            System.out.print(p.info +"  "); 
+            p = p.next;
+        }
+        System.out.println("");
+    }
+    
+}
+
+
+
+insertAt
+    void insertAt(int position, Node newNode) {
+        if (position == 0) {
+            newNode.next = head;
+            head = newNode;
+        } else {
+            Node previousNode = head;
+            int count = 0;
+
+            while (count < position - 1 && previousNode.next != null) {
+                previousNode = previousNode.next;
+                count++;
+            }
+
+            if (count == position - 1 && previousNode != null) {
+                newNode.next = previousNode.next;
+                previousNode.next = newNode;
+            }
+        }
+    }
+removeAt
+void removeAt(int position) {
+    if (position == 0) {
+        if (head != null) {
+            head = head.next;
+        }
+    } else {
+        Node previousNode = head;
+        int count = 0;
+
+        while (count < position - 1 && previousNode.next != null) {
+            previousNode = previousNode.next;
+            count++;
+        }
+
+        if (count == position - 1 && previousNode != null && previousNode.next != null) {
+            previousNode.next = previousNode.next.next;
+        }
+    }
+}
+
+size
+// Return number of nodes in the list
+    public int size() {
+        Node p = head; int count = 0;
+        while(p!=null) {count++; p=p.next;}
+        return count;
+    }
+
+	// Return the first node which data=x, otherwise return null
+    Node search(int x) {
+        Node p = head;
+        while(p!=null && p.data!=x) p = p.next;
+        return p;
+    }    
+    // Inserts a new node after the given prev_node
+    void addAfter(Node prev_node, int new_data) {
+        /* 1. Check if the given Node is null */
+        if (prev_node==null) {
+            System.out.println("The given previous node cannot be null");
+            return;
+        }
+        /* 2. Allocate the Node & 3. Put in the data*/
+        Node new_node = new Node(new_data);
+        /* 4. Make next of new Node as next of prev_node */
+        new_node.next = prev_node.next;
+        /* 5. make next of prev_node as new_node */
+        prev_node.next = new_node;
+    }                                                                                         
+    void addBefore(Node given_ptr, int new_data) { 
+        // First check if the given pointer is the address of head
+        if(head==given_ptr) {
+            Node n = new Node(new_data); // Create a new node
+            n.next = head; // Point to next to current head
+            head = n; // Update the head pointer
+        // Otherwise, traverse the list to find previous node of given node
+        } else {
+            Node prev = null;
+            // This loop will return p with previous pointer of given node
+            for(Node n=head; n!=given_ptr; prev=n, n=n.next);
+            // Create a new node
+            Node m = new Node(new_data);
+            // Update the m.next
+            m.next = prev.next;
+            // Update previous node' s next
+            prev.next = m;
+        }
+    }
+    
+    // Given a key, deletes the first occurrence of key in linked list
+    public void deleteNode(int key) {
+        // Store head node
+        Node temp=head, prev=null;
+        // If head node itself holds the key to be deleted
+        if (temp!=null && temp.data==key) {
+            head = temp.next; // Changed head
+            return;
+        }
+        // Search for the key to be deleted, keep track of
+        // the previous node as we need to change temp.next
+        while (temp!=null && temp.data!=key) {
+            prev = temp;
+            temp = temp.next;
+        }
+        // If key was not present in linked list
+        if (temp==null) return;
+        // Unlink the node from linked list
+        prev.next = temp.next;
+    }   
+    // Delete a node from the beginning of a list
+    public void deleFirst() {
+        Node p=head;
+        if(p==null) return;
+        //if head in not null and next of head is null, delete the head
+        if(p.next == null) {
+            p = null;
+        } else {
+            head=p.next;
+        }
+    }    
+    // Delete a node from the end of a list
+    public void deleLast() {
+        Node p=head;
+        if(p==null) return;
+        //if head in not null and next of head is null, delete the head
+        if(p.next == null) {
+            p = null;
+        } else { //else, traverse to the second last element of the list
+            Node temp = new Node();
+            temp = p;
+            while(temp.next.next != null)
+                temp = temp.next; // temp is the second last node 
+            //change the next of temp to null and delete the last node
+            Node lastNode = temp.next;
+            temp.next = null; 
+            lastNode = null;
+        }
+    }  
+    void deleteAter(Node p) {
+        Node prev=p, temp=p.next;
+        if (temp==null) return;
+        // Unlink the node from linked list
+        prev.next = temp.next;
+    } 
+    void deleteBefore(Node p) {
+        if(p==null || p==head) return;
+        Node tmp = null;
+        Node n = head;
+        while(n!=null && n.next!=p) {
+            tmp=n;
+            n=n.next;
+        }
+        if(n==null) 
+            return;
+        else if(n==head) 
+            head=p;
+        else 
+            tmp.next = p;
+}
+      
+   // Delete a node from the list
+   void delete(Node p) {
+       if(p==null) return;
+       // find prev where prev.next = p
+       Node f=head, prev=null;
+       while(f!=null && f!=p) {prev=f; f=f.next;}       
+       if(prev==null) { // remove head
+           head = head.next;
+           if(head==null) tail=null;
+       } else {
+           prev.next = p.next;
+           if(p==tail) tail = prev;
+       }
+       p.next = null;
+   }
+       
+   // Delete an i-th node on the list
+   public void deleteNode2(int i) {
+       Node p=head; int count=0;
+       while(p!=null && count<i) {count++; p = p.next;}
+       delete(p);
+   }
+    
+Get at pos
+    // Return a node at position i
+    Node get(int i) {
+        Node p=head; int count=0;
+        while(p!=null && count<i) {count++; p = p.next;}
+        return p;
+    }
+sort
+// Sort the list ascending 
+    public void sort() {
+        int n = size();
+        for(int i=0; i<n-1; i++) {
+            for(int j=i+1; j<n; j++) {
+                Node pi=get(i), pj=get(j);
+                if(pi.info.paddle > pj.info.paddle) {
+                    Boat temp=pi.info;
+                    pi.info=pj.info; 
+                    pj.info=temp;
+                }
+            }
+        }
+    }
+
+    // Return a node at position i
+    Node get(int i) {
+        Node p=head; int count=0;
+        while(p!=null && count<i) {count++; p = p.next;}
+        return p;
+    }
+    
+    // Return number of nodes in the list
+    public int size() {
+        Node p = head; int count = 0;
+        while(p!=null) {count++; p=p.next;}
+        return count;
+    }
+reverse
+    // Reverse a list
+    public void reverse() {
+        int n = size();
+        for(int i=0,j=n-1; i<j; i++,j--) {
+            Node pi=get(i), pj=get(j);
+            int temp=pi.data; pi.data=pj.data; pj.data=temp;
+        }
+    }
+    
+    // This function prints contents of linked list starting 
+    // from the given node
+    public void printList() {
+        Node tnode = head;
+        while (tnode!=null) {
+            System.out.print(tnode.data + " ");
+            tnode = tnode.next;
+        }
+        System.out.println();
+    }
+
+sortFromXtoY
+// Sort the list ascending 
+    public void sortFromXtoY(int x, int y) {
+        y++;
+        for (int i = x; i < y - 1; i++) {
+            for (int j = i + 1; j < y; j++) {
+                Node pi = get(i), pj = get(j);
+                if (pi.info.paddle > pj.info.paddle) {
+                    System.out.println(pi.info.paddle  + " " + pj.info.paddle );
+                    Boat temp = pi.info;
+                    pi.info = pj.info;
+                    pj.info = temp;
+                    
+                }
+            }
+        }
+    }
+
+BSTree
+Node search(Node p, int x) {
+        if(p==null) return(null);
+        if(p.info==x) return(p);
+        if(x<p.info) 
+            return(search(p.left,x));
+        else
+            return(search(p.right,x));
+    } 
+    Insert
+    void insert(int x) {
+        Node q = new Node(x);
+        if(isEmpty()) {root=q;return;}
+        Node f, p; f=null; p=root;
+        while(p!=null) {
+            if(p.info==x) {
+                System.out.println("The key " + x 
+                        + " already exists, no insertion");
+                return;
+            }
+            f=p;
+            if(x<p.info) p=p.left; else p=p.right;
+        }
+        if(x<f.info) f.left=q; else f.right=q;
+    }
+    
+    void insertMany(int [] a) {
+        for(int i=0; i<a.length; i++) insert(a[i]);
+    }
+    
+    void visit(Node p) {System.out.print(p.info + " ");}
+    
+    void preOrder(Node p) {
+        if(p==null) return;
+        visit(p);
+        preOrder(p.left);
+        preOrder(p.right);
+    }
+    
+    void inOrder(Node p) {
+        if(p==null) return;
+        inOrder(p.left);
+        visit(p);
+        inOrder(p.right);
+    }
+    
+    void postOrder(Node p) {
+        if(p==null) return;
+        postOrder(p.left);
+        postOrder(p.right);
+        visit(p);
+    }
+    
+    void breadth() {
+        if(root==null) return;
+        MyQueue q = new MyQueue();
+        q.enqueue(root);
+        Node p;
+        while(!q.isEmpty()) {
+            p = (Node) q.dequeue();
+            if(p.left !=null)
+                q.enqueue(p.left);
+            if(p.right !=null)
+                q.enqueue(p.right);
+            visit(p);
+        }
+    }
+    
+    Node deleteLeaves(Node root, int x) {
+        if(root==null) return null;
+        root.left = deleteLeaves(root.left, x);
+        root.right = deleteLeaves(root.right, x);
+        if(root.info==x && root.left==null && root.right==null) 
+            return null;
+        return root;
+    }
+
